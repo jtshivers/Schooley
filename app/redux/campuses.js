@@ -48,7 +48,7 @@ export const updateCampus = (campus, history) => {
       campus
     );
     dispatch(_updateCampus(updated));
-    history.push(`/campuses`);
+    history.push(`/campuses/${campus.id}`);
   };
 };
 
@@ -67,14 +67,11 @@ export const fetchCampuses = () => {
   };
 };
 
-// Take a look at app/redux/index.js to see where this reducer is
-// added to the Redux store with combineReducers
 export default function campusesReducer(state = [], action) {
   switch (action.type) {
     case SET_CAMPUSES:
       return [...action.campuses];
     case CREATE_CAMPUS:
-      console.log("create campus reducer reached");
       return [...state, action.campus];
     case DELETE_CAMPUS:
       return state.filter((campus) => campus.id !== action.campus.id);
@@ -85,5 +82,4 @@ export default function campusesReducer(state = [], action) {
     default:
       return state;
   }
-  // return null;
 }

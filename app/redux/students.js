@@ -49,8 +49,6 @@ export const updateStudent = (student, history) => {
       student
     );
     dispatch(_updateStudent(updated));
-    // history.push(`/students`);
-    // const currentPath = history.location.pathname;
     currentPath.includes("students")
       ? history.push(`/students/${student.id}`)
       : history.push(currentPath);
@@ -60,7 +58,6 @@ export const updateStudent = (student, history) => {
 export const deleteStudent = (id, history) => {
   return async (dispatch) => {
     const { data: student } = await axios.delete(`/api/students/${id}`);
-    console.log("history is ", history);
     dispatch(_deleteStudent(student));
     history.push("/students");
   };
@@ -73,8 +70,6 @@ export const fetchStudents = () => {
   };
 };
 
-// Take a look at app/redux/index.js to see where this reducer is
-// added to the Redux store with combineReducers
 export default function studentsReducer(state = [], action) {
   switch (action.type) {
     case SET_STUDENTS:
@@ -90,5 +85,4 @@ export default function studentsReducer(state = [], action) {
     default:
       return state;
   }
-  // return null;
 }
