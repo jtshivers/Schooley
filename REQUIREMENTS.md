@@ -18,8 +18,8 @@ The requirements below are broken into separate **tiers**, which model the way w
 
 #### Backend
 
-- [ ] Write a route to serve up all students
-- [ ] Write a route to serve up all campuses
+- [x] Write a route to serve up all students
+- [x] Write a route to serve up all campuses
 
 - Write a `campuses` model with the following information:
   - [x] name - not empty or null
