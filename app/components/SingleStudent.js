@@ -25,9 +25,12 @@ export class SingleStudent extends React.Component {
     });
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault();
     this.props.updateStudent({ ...this.state });
+    const { studentId } = this.props.match.params;
+    await this.props.fetchStudent(studentId);
+    this.setState(this.props.student);
   }
 
   async componentDidMount() {

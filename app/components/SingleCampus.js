@@ -25,9 +25,12 @@ export class SingleCampus extends React.Component {
     });
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault();
     this.props.updateCampus({ ...this.state });
+    const { campusId } = this.props.match.params;
+    await this.props.fetchCampus(campusId);
+    this.setState(this.props.campus);
   }
 
   async componentDidMount() {
