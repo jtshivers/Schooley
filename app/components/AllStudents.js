@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchStudents } from "../redux/students";
+import CreateStudent from "./CreateStudent";
 import { Link } from "react-router-dom";
 
 export class AllStudents extends React.Component {
@@ -21,6 +22,7 @@ export class AllStudents extends React.Component {
             </Link>
           </div>
         ))}
+        <CreateStudent />
       </div>
     );
   }

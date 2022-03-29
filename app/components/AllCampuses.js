@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchCampuses } from "../redux/campuses";
+import CreateCampus from "./CreateCampus";
 import { Link } from "react-router-dom";
 
 export class AllCampuses extends React.Component {
@@ -21,6 +22,7 @@ export class AllCampuses extends React.Component {
             </Link>
           </div>
         ))}
+        <CreateCampus />
       </div>
     );
   }
