@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SET_CAMPUSES = "SET_CAMPUS";
+const SET_CAMPUSES = "SET_CAMPUSES";
 
 export const setCampuses = (campuses) => {
   return {

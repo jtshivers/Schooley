@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Campus from "./AllCampuses";
+import SingleCampus from "./SingleCampus";
 import Student from "./AllStudents";
+import SingleStudent from "./SingleStudent";
 
 const Routes = () => {
   return (
@@ -16,8 +18,10 @@ const Routes = () => {
         <main>
           <h1>Welcome to the Margaret Hamilton Academy of JavaScript!</h1>
           <p>This seems like a nice place to get started with some Routes!</p>
-          <Route path="/campuses" component={Campus} />
-          <Route path="/students" component={Student} />
+          <Route exact path="/campuses" component={Campus} />
+          <Route path="/campuses/:campusId" component={SingleCampus} />
+          <Route exact path="/students" component={Student} />
+          <Route path="/students/:studentId" component={SingleStudent} />
         </main>
       </div>
     </Router>
