@@ -2,17 +2,43 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchStudent } from "../redux/singleStudent";
 import { Link } from "react-router-dom";
+import { updateStudent } from "../redux/students";
 
 export class SingleStudent extends React.Component {
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      imageUrl: "",
+      gpa: 0.1,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.props.updateStudent({ ...this.state });
+  }
+
+  async componentDidMount() {
     const { studentId } = this.props.match.params;
-    console.log("student id is", studentId);
-    this.props.fetchStudent(studentId);
-    console.log("props is now ", this.props);
+    await this.props.fetchStudent(studentId);
+    this.setState(this.props.student);
   }
 
   render() {
-    console.log("This is props in the SingleStudent Component", this.props);
+    const { handleSubmit, handleChange } = this;
+    const { firstName, lastName, email, imageUrl, gpa } = this.state;
     const { student } = this.props;
     return (
       <div>
@@ -29,6 +55,29 @@ export class SingleStudent extends React.Component {
           "This kid just ain't right. We don't let him in our schools anymore."
         )}
         <img src={student.imageUrl} />
+        <form id="edit-student-form" onSubmit={handleSubmit}>
+          <label htmlFor="firstName">First Name:</label>
+          <input name="firstName" onChange={handleChange} value={firstName} />
+
+          <label htmlFor="lastName">Last Name:</label>
+          <input name="lastName" onChange={handleChange} value={lastName} />
+
+          <label htmlFor="email">Email:</label>
+          <input name="email" onChange={handleChange} value={email} />
+
+          <label htmlFor="gpa">GPA:</label>
+          <input name="gpa" onChange={handleChange} value={gpa} />
+
+          <label htmlFor="imageUrl">Image URL:</label>
+          <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+
+          <button
+            type="submit"
+            onClick={() => this.props.updateStudent(this.state)}
+          >
+            Submit
+          </button>
+        </form>
       </div>
     );
   }
@@ -40,9 +89,10 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     fetchStudent: (id) => dispatch(fetchStudent(id)),
+    updateStudent: (student) => dispatch(updateStudent(student, history)),
   };
 };
 

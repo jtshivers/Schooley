@@ -48,7 +48,7 @@ export const updateCampus = (campus, history) => {
       campus
     );
     dispatch(_updateCampus(updated));
-    history.push("/campuses");
+    history.push(`/campuses`);
   };
 };
 

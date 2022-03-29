@@ -2,17 +2,44 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchCampus } from "../redux/singleCampus";
 import { Link } from "react-router-dom";
+import { updateCampus } from "../redux/campuses";
+import { updateStudent } from "../redux/students";
 
 export class SingleCampus extends React.Component {
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      imageUrl: "",
+      address: "",
+      description: "",
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.props.updateCampus({ ...this.state });
+  }
+
+  async componentDidMount() {
     const { campusId } = this.props.match.params;
-    console.log("campus id is", campusId);
-    this.props.fetchCampus(campusId);
-    console.log("props is now ", this.props);
+    await this.props.fetchCampus(campusId);
+    this.setState(this.props.campus);
   }
 
   render() {
-    console.log("This is props in the SingleCampus Component", this.props);
+    const { name, imageUrl, address, description } = this.state;
+    const { handleSubmit, handleChange } = this;
+
     const { campus } = this.props;
     let students = campus.students;
     console.log("students are ", students);
@@ -30,10 +57,43 @@ export class SingleCampus extends React.Component {
                 <Link to={`/students/${student.id}`}>
                   {student.lastName}, {student.firstName[0]}
                   <img src={student.imageUrl} />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      this.props.updateStudent({ ...student, campusId: null })
+                    }
+                  >
+                    Unregister
+                  </button>
                 </Link>
               </div>
             ))
           : "We ain't got no students in here"}
+        <form id="create-campus-form" onSubmit={handleSubmit}>
+          <label htmlFor="name">Name:</label>
+          <input name="name" onChange={handleChange} value={name} />
+
+          <label htmlFor="address">Address:</label>
+          <input name="address" onChange={handleChange} value={address} />
+
+          <label htmlFor="description">Description:</label>
+          <input
+            name="description"
+            onChange={handleChange}
+            value={description}
+          />
+
+          <label htmlFor="imageUrl">Image URL:</label>
+          <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+
+          <button
+            type="submit"
+            onClick={() => this.props.updateCampus(this.state)}
+          >
+            Submit
+          </button>
+          <Link to="/">Cancel</Link>
+        </form>
       </div>
     );
   }
@@ -45,9 +105,11 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampus(id)),
+    updateCampus: (campus) => dispatch(updateCampus(campus, history)),
+    updateStudent: (student) => dispatch(updateStudent(student, history)),
   };
 };
 

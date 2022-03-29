@@ -43,18 +43,24 @@ export const createStudent = (student, history) => {
 
 export const updateStudent = (student, history) => {
   return async (dispatch) => {
+    const currentPath = history.location.pathname;
     const { data: updated } = await axios.put(
-      `/api/studentes/${student.id}`,
+      `/api/students/${student.id}`,
       student
     );
     dispatch(_updateStudent(updated));
-    history.push("/students");
+    // history.push(`/students`);
+    // const currentPath = history.location.pathname;
+    currentPath.includes("students")
+      ? history.push(`/students/${student.id}`)
+      : history.push(currentPath);
   };
 };
 
 export const deleteStudent = (id, history) => {
   return async (dispatch) => {
     const { data: student } = await axios.delete(`/api/students/${id}`);
+    console.log("history is ", history);
     dispatch(_deleteStudent(student));
     history.push("/students");
   };
