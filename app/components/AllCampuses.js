@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchCampuses } from "../redux/campuses";
+import { fetchCampuses, deleteCampus } from "../redux/campuses";
 import CreateCampus from "./CreateCampus";
 import { Link } from "react-router-dom";
 
@@ -17,6 +17,15 @@ export class AllCampuses extends React.Component {
           <div key={campus.id} className="campus">
             <Link to={`/campuses/${campus.id}`}>
               <h2>{campus.name}</h2>
+              <form onSubmit={(ev) => ev.preventDefault()}>
+                <button
+                  type="button"
+                  className="remove"
+                  onClick={() => this.props.deleteCampus(campus.id)}
+                >
+                  X
+                </button>
+              </form>
               <p>{campus.description}</p>
               <img src={campus.imageUrl} />
             </Link>
@@ -34,9 +43,10 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     fetchCampuses: () => dispatch(fetchCampuses()),
+    deleteCampus: (id) => dispatch(deleteCampus(id, history)),
   };
 };
 

@@ -37,7 +37,7 @@ export const createCampus = (campus, history) => {
   return async (dispatch) => {
     const { data: created } = await axios.post("/api/campuses", campus);
     dispatch(_createCampus(created));
-    history.push("/");
+    history.push("/campuses");
   };
 };
 
@@ -48,7 +48,7 @@ export const updateCampus = (campus, history) => {
       campus
     );
     dispatch(_updateCampus(updated));
-    history.push("/");
+    history.push("/campuses");
   };
 };
 
@@ -56,7 +56,7 @@ export const deleteCampus = (id, history) => {
   return async (dispatch) => {
     const { data: campus } = await axios.delete(`/api/campuses/${id}`);
     dispatch(_deleteCampus(campus));
-    history.push("/");
+    history.push("/campuses");
   };
 };
 

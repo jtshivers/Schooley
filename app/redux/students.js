@@ -37,7 +37,7 @@ export const createStudent = (student, history) => {
   return async (dispatch) => {
     const { data: created } = await axios.post("/api/students", student);
     dispatch(_createStudent(created));
-    history.push("/");
+    history.push("/students");
   };
 };
 
@@ -48,7 +48,7 @@ export const updateStudent = (student, history) => {
       student
     );
     dispatch(_updateStudent(updated));
-    history.push("/");
+    history.push("/students");
   };
 };
 
@@ -56,7 +56,7 @@ export const deleteStudent = (id, history) => {
   return async (dispatch) => {
     const { data: student } = await axios.delete(`/api/students/${id}`);
     dispatch(_deleteStudent(student));
-    history.push("/");
+    history.push("/students");
   };
 };
 
@@ -74,7 +74,6 @@ export default function studentsReducer(state = [], action) {
     case SET_STUDENTS:
       return [...action.students];
     case CREATE_STUDENT:
-      console.log("create student reducer reached");
       return [...state, action.student];
     case DELETE_STUDENT:
       return state.filter((student) => student.id !== action.student.id);
