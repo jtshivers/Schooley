@@ -11,7 +11,7 @@ class CreateStudent extends Component {
       lastName: "",
       email: "",
       imageUrl: "",
-      gpa: 0.1,
+      gpa: 0.0,
     };
 
     this.handleChange = this.handleChange.bind(this);

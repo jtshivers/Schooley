@@ -36,7 +36,14 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await Campus.create(req.body));
+    let newCampus = req.body;
+    if (newCampus.imageUrl === "") {
+      delete newCampus.imageUrl;
+    }
+    if (newCampus.description === "") {
+      delete newCampus.description;
+    }
+    res.status(201).send(await Campus.create(newCampus));
   } catch (err) {
     next(err);
   }
@@ -45,7 +52,14 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   try {
     const campus = await Campus.findByPk(req.params.id);
-    res.send(await campus.update(req.body));
+    let newCampus = req.body;
+    if (newCampus.imageUrl === "") {
+      delete newCampus.imageUrl;
+    }
+    if (newCampus.description === "") {
+      delete newCampus.description;
+    }
+    res.send(await campus.update(newCampus));
   } catch (error) {
     next(error);
   }

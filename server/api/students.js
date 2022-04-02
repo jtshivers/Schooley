@@ -36,7 +36,11 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await Student.create(req.body));
+    let newStudent = req.body;
+    if (newStudent.imageUrl === "") {
+      delete newStudent.imageUrl;
+    }
+    res.status(201).send(await Student.create(newStudent));
   } catch (err) {
     next(err);
   }
@@ -45,7 +49,12 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.id);
-    res.send(await student.update(req.body));
+    let newStudent = req.body;
+    if (newStudent.imageUrl === "") {
+      delete newStudent.imageUrl;
+    }
+    console.log("updated student is", newStudent);
+    res.send(await student.update(newStudent));
   } catch (error) {
     next(error);
   }

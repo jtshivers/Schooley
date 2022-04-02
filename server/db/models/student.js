@@ -29,7 +29,6 @@ const Student = db.define("student", {
     defaultValue: "https://tinyurl.com/stockangrystudent",
     validate: {
       isUrl: true,
-      notEmpty: true,
     },
   },
   gpa: {
