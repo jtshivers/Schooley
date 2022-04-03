@@ -1,9 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Campus from "./AllCampuses";
 import SingleCampus from "./SingleCampus";
 import Student from "./AllStudents";
 import SingleStudent from "./SingleStudent";
+import NotFound from "./NotFound";
+import Homepage from "./Homepage";
 
 const Routes = () => {
   return (
@@ -16,12 +18,14 @@ const Routes = () => {
           <Link to="/students">Students</Link>
         </nav>
         <main>
-          <h1>Welcome to the Margaret Hamilton Academy of JavaScript!</h1>
-          <p>This seems like a nice place to get started with some Routes!</p>
-          <Route exact path="/campuses" component={Campus} />
-          <Route path="/campuses/:campusId" component={SingleCampus} />
-          <Route exact path="/students" component={Student} />
-          <Route path="/students/:studentId" component={SingleStudent} />
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/campuses" component={Campus} />
+            <Route path="/campuses/:campusId" component={SingleCampus} />
+            <Route exact path="/students" component={Student} />
+            <Route path="/students/:studentId" component={SingleStudent} />
+            <Route component={NotFound} />
+          </Switch>
         </main>
       </div>
     </Router>

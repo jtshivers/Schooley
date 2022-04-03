@@ -4,7 +4,13 @@ const Student = require("../db/models/student");
 
 router.get("/", async (req, res, next) => {
   try {
-    let campuses = await Campus.findAll();
+    let campuses = await Campus.findAll({
+      include: [
+        {
+          model: Student,
+        },
+      ],
+    });
     res.json(campuses);
   } catch (err) {
     next(err);

@@ -5,19 +5,75 @@ import CreateCampus from "./CreateCampus";
 import { Link } from "react-router-dom";
 
 export class AllCampuses extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      sort: "default",
+      filter: "all",
+    };
+    this.sorter = this.sorter.bind(this);
+    this.filter = this.filter.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchCampuses();
   }
 
+  handleSelect(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  sorter(arr) {
+    if (this.state.sort === "default") {
+      return arr;
+    } else {
+      return arr.sort((a, b) => b.students.length - a.students.length);
+    }
+  }
+
+  filter(arr) {
+    console.log(arr);
+    console.log(this.state);
+    if (this.state.filter === "empty") {
+      return arr.filter((campus) => campus.students.length === 0);
+    } else {
+      return arr;
+    }
+  }
+
   render() {
-    console.log("This is props in the AllCampuses Component", this.props);
+    const { handleSelect, sorter, filter } = this;
     return (
       <div className="campusList">
-        {this.props.campuses.map((campus) => (
+        <label htmlFor="sort">Sort By: </label>
+        <select name="sort" id="campusSort" onChange={handleSelect}>
+          <option value="" disabled selected>
+            Select
+          </option>
+          <option value="numStudents">Size</option>
+        </select>
+        <label htmlFor="filter">Filter: </label>
+        <select name="filter" id="campusFilter" onChange={handleSelect}>
+          <option value="" disabled selected>
+            Select
+          </option>
+          <option value="all">All</option>
+          <option value="empty">Empty Schools</option>
+        </select>
+        {filter(sorter(this.props.campuses)).map((campus) => (
           <div key={campus.id} className="campus">
             <Link to={`/campuses/${campus.id}`} className="campus-link">
               <h2>{campus.name}</h2>
-
+              <h3>
+                {campus.students.length} Student
+                {campus.students.length > 1 || campus.students.length === 0
+                  ? "s"
+                  : ""}
+              </h3>
               <p>{campus.description}</p>
               <img src={campus.imageUrl} />
             </Link>

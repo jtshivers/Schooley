@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { updateStudent } from "../redux/students";
 import validUrl from "valid-url";
 import validEmail from "email-validator";
+import NotFound from "./NotFound";
 
 export class SingleStudent extends React.Component {
   constructor() {
@@ -96,6 +97,9 @@ export class SingleStudent extends React.Component {
     const { handleSubmit, handleChange } = this;
     const { firstName, lastName, email, imageUrl, gpa } = this.state;
     const { student } = this.props;
+    if (!Object.keys(student).length) {
+      return <NotFound type="student" />;
+    }
     return (
       <div className="single-student-container">
         <div className="single-student">

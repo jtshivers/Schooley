@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { updateCampus } from "../redux/campuses";
 import { updateStudent } from "../redux/students";
 import validUrl from "valid-url";
+import NotFound from "./NotFound";
 
 export class SingleCampus extends React.Component {
   constructor() {
@@ -85,6 +86,10 @@ export class SingleCampus extends React.Component {
     // console.log("students are ", students);
     // console.log("campus is", campus);
     // console.log("campus students are", campus.students);
+    console.log("campus is", campus);
+    if (!Object.keys(campus).length) {
+      return <NotFound type="campus" />;
+    }
     return (
       <div className="single-campus-container">
         <div className="single-campus">
@@ -95,7 +100,7 @@ export class SingleCampus extends React.Component {
         </div>
 
         <div className="campus-student-container">
-          {students != null && <h2>Students</h2>}
+          {/* {students != null && <h2>Students</h2>} */}
           {students != null
             ? students.map((student) => (
                 <div key={student.id} className="campus-student">
