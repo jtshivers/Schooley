@@ -48,11 +48,13 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
+    console.log("req body is", req.body);
     const student = await Student.findByPk(req.params.id);
     let newStudent = req.body;
     if (newStudent.imageUrl === "") {
       delete newStudent.imageUrl;
     }
+    console.log("newStudent after delete is ", newStudent);
     res.send(await student.update(newStudent));
   } catch (error) {
     next(error);

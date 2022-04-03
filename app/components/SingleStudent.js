@@ -1,8 +1,11 @@
+/* eslint-disable complexity */
 import React from "react";
 import { connect } from "react-redux";
 import { fetchStudent } from "../redux/singleStudent";
 import { Link } from "react-router-dom";
 import { updateStudent } from "../redux/students";
+import validUrl from "valid-url";
+import validEmail from "email-validator";
 
 export class SingleStudent extends React.Component {
   constructor() {
@@ -12,11 +15,57 @@ export class SingleStudent extends React.Component {
       lastName: "",
       email: "",
       imageUrl: "",
-      gpa: 0.1,
+      gpa: 0.0,
     };
-
+    this.validFields = {
+      firstName: true,
+      lastName: true,
+      email: true,
+      imageUrl: true,
+      gpa: true,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  validateSubmission(state) {
+    const { firstName, lastName, email, imageUrl } = state;
+    const gpa = parseFloat(this.state.gpa);
+    if (typeof firstName === "string" && firstName.length > 0) {
+      this.validFields.firstName = true;
+    } else {
+      this.validFields.firstName = false;
+    }
+    if (typeof lastName === "string" && lastName.length > 0) {
+      this.validFields.lastName = true;
+    } else {
+      this.validFields.lastName = false;
+    }
+    if (
+      typeof email === "string" &&
+      email.length > 0 &&
+      validEmail.validate(email)
+    ) {
+      this.validFields.email = true;
+    } else {
+      this.validFields.email = false;
+    }
+    if (typeof imageUrl === "string" && imageUrl.length > 0) {
+      if (validUrl.isWebUri(imageUrl)) {
+        console.log("this imageUrl is valid");
+        this.validFields.imageUrl = true;
+      } else {
+        this.validFields.imageUrl = false;
+      }
+    } else {
+      this.validFields.imageUrl = true;
+    }
+    if (typeof gpa === "number" && gpa >= 0 && gpa <= 4) {
+      this.validFields.gpa = true;
+    } else {
+      this.validFields.gpa = false;
+    }
+    return Object.values(this.validFields).reduce((a, b) => a && b, true);
   }
 
   handleChange(evt) {
@@ -27,10 +76,14 @@ export class SingleStudent extends React.Component {
 
   async handleSubmit(evt) {
     evt.preventDefault();
-    this.props.updateStudent({ ...this.state });
-    const { studentId } = this.props.match.params;
-    await this.props.fetchStudent(studentId);
-    this.setState(this.props.student);
+    if (this.validateSubmission({ ...this.state })) {
+      this.props.updateStudent(this.state);
+      const { studentId } = this.props.match.params;
+      await this.props.fetchStudent(studentId);
+      this.setState(() => this.props.student);
+    } else {
+      this.setState((prevState) => ({ ...prevState }));
+    }
   }
 
   async componentDidMount() {
@@ -44,42 +97,80 @@ export class SingleStudent extends React.Component {
     const { firstName, lastName, email, imageUrl, gpa } = this.state;
     const { student } = this.props;
     return (
-      <div>
-        <h2>
-          {student.lastName}, {student.firstName}
-        </h2>
-        <h3>{student.email}</h3>
-        <h3>GPA: {student.gpa}</h3>
-        {student.campus != null ? (
-          <Link to={`/campuses/${student.campus.id}`}>
-            {student.campus.name}
-          </Link>
-        ) : (
-          "This kid just ain't right. We don't let him in our schools anymore."
-        )}
-        <img src={student.imageUrl} />
-        <form id="edit-student-form" onSubmit={handleSubmit}>
-          <label htmlFor="firstName">First Name:</label>
-          <input name="firstName" onChange={handleChange} value={firstName} />
+      <div className="single-student-container">
+        <div className="single-student">
+          <h2>
+            {student.lastName}, {student.firstName}
+          </h2>
+          <h3>{student.email}</h3>
+          <h3>GPA: {student.gpa}</h3>
+          <img src={student.imageUrl} />
+          {student.campus != null ? (
+            <Link to={`/campuses/${student.campus.id}`}>
+              {student.campus.name}
+            </Link>
+          ) : (
+            "This kid just ain't right. We don't let him in our schools anymore."
+          )}
+        </div>
 
-          <label htmlFor="lastName">Last Name:</label>
-          <input name="lastName" onChange={handleChange} value={lastName} />
+        <form className="single-student-form" onSubmit={handleSubmit}>
+          <h2>Edit Student</h2>
 
-          <label htmlFor="email">Email:</label>
-          <input name="email" onChange={handleChange} value={email} />
+          <div className="form-group">
+            <label htmlFor="firstName">First Name:</label>
+            <input name="firstName" onChange={handleChange} value={firstName} />
+            {!this.validFields.firstName && (
+              <p className="form-error">^ This field is required.</p>
+            )}
+          </div>
 
-          <label htmlFor="gpa">GPA:</label>
-          <input name="gpa" onChange={handleChange} value={gpa} />
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name:</label>
+            <input name="lastName" onChange={handleChange} value={lastName} />
+            {!this.validFields.lastName && (
+              <p className="form-error">^ This field is required.</p>
+            )}
+          </div>
 
-          <label htmlFor="imageUrl">Image URL:</label>
-          <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input name="email" onChange={handleChange} value={email} />
+            {!this.validFields.email && (
+              <p className="form-error">^ Must be a valid email address.</p>
+            )}
+          </div>
 
-          <button
-            type="submit"
-            onClick={() => this.props.updateStudent(this.state)}
-          >
-            Submit
-          </button>
+          <div className="form-group">
+            <label htmlFor="gpa">GPA:</label>
+            <input name="gpa" onChange={handleChange} value={gpa} />
+            {!this.validFields.gpa && (
+              <p className="form-error">^ Must be a number between 0 and 4.</p>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="imageUrl">Image URL:</label>
+            <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+            {!this.validFields.imageUrl && (
+              <p className="form-error">^ If provided, must be a valid URL.</p>
+            )}
+          </div>
+
+          <div className="form-group">
+            <button
+              type="submit"
+              className="submit-btn"
+              onClick={() => this.props.updateStudent(this.state)}
+            >
+              Submit
+            </button>
+            <Link to="/students">
+              <button type="button" className="cancel-btn">
+                Cancel
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     );

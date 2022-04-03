@@ -15,11 +15,12 @@ export class AllStudents extends React.Component {
       <div className="studentList">
         {this.props.students.map((student) => (
           <div key={student.id} className="student">
-            <Link to={`/students/${student.id}`}>
+            <Link to={`/students/${student.id}`} className="student-link">
+              {/* <div className="form-group"> */}
               <h2>
                 {student.lastName}, {student.firstName}
               </h2>
-              <form onSubmit={(ev) => ev.preventDefault()}>
+              {/* <form onSubmit={(ev) => ev.preventDefault()}>
                 <button
                   type="button"
                   className="remove"
@@ -27,10 +28,21 @@ export class AllStudents extends React.Component {
                 >
                   X
                 </button>
-              </form>
+              </form> */}
+              {/* </div> */}
+
               <p>GPA: {student.gpa}</p>
               <img src={student.imageUrl} />
             </Link>
+            <form onSubmit={(ev) => ev.preventDefault()}>
+              <button
+                type="button"
+                className="remove"
+                onClick={() => this.props.deleteStudent(student.id)}
+              >
+                X
+              </button>
+            </form>
           </div>
         ))}
         <CreateStudent />

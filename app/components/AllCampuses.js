@@ -15,20 +15,21 @@ export class AllCampuses extends React.Component {
       <div className="campusList">
         {this.props.campuses.map((campus) => (
           <div key={campus.id} className="campus">
-            <Link to={`/campuses/${campus.id}`}>
+            <Link to={`/campuses/${campus.id}`} className="campus-link">
               <h2>{campus.name}</h2>
-              <form onSubmit={(ev) => ev.preventDefault()}>
-                <button
-                  type="button"
-                  className="remove"
-                  onClick={() => this.props.deleteCampus(campus.id)}
-                >
-                  X
-                </button>
-              </form>
+
               <p>{campus.description}</p>
               <img src={campus.imageUrl} />
             </Link>
+            <form onSubmit={(ev) => ev.preventDefault()}>
+              <button
+                type="button"
+                className="remove"
+                onClick={() => this.props.deleteCampus(campus.id)}
+              >
+                X
+              </button>
+            </form>
           </div>
         ))}
         <CreateCampus />

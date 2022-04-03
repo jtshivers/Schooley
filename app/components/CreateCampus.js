@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createCampus } from "../redux/campuses";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import validUrl from "valid-url";
 
 class CreateCampus extends Component {
   constructor() {
@@ -13,8 +14,39 @@ class CreateCampus extends Component {
       description: "",
     };
 
+    this.validFields = {
+      name: true,
+      address: true,
+      imageUrl: true,
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  validateSubmission(state) {
+    const { name, address, imageUrl } = state;
+    if (typeof name === "string" && name.length > 0) {
+      this.validFields.name = true;
+    } else {
+      this.validFields.name = false;
+    }
+    if (typeof address === "string" && address.length > 0) {
+      this.validFields.address = true;
+    } else {
+      this.validFields.address = false;
+    }
+    if (typeof imageUrl === "string" && imageUrl.length > 0) {
+      if (validUrl.isWebUri(imageUrl)) {
+        console.log("this imageUrl is valid");
+        this.validFields.imageUrl = true;
+      } else {
+        this.validFields.imageUrl = false;
+      }
+    } else {
+      this.validFields.imageUrl = true;
+    }
+    return Object.values(this.validFields).reduce((a, b) => a && b, true);
   }
 
   handleChange(evt) {
@@ -25,7 +57,9 @@ class CreateCampus extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.createCampus({ ...this.state });
+    if (this.validateSubmission({ ...this.state })) {
+      this.props.createCampus({ ...this.state });
+    }
   }
 
   render() {
@@ -33,21 +67,55 @@ class CreateCampus extends Component {
     const { handleSubmit, handleChange } = this;
 
     return (
-      <form id="create-campus-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input name="name" onChange={handleChange} value={name} />
+      <form className="campus-form" onSubmit={handleSubmit}>
+        <h2>Create Campus</h2>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input name="name" onChange={handleChange} value={name} />
+          {!this.validFields.name && (
+            <p className="form-error">^ This field is required.</p>
+          )}
+        </div>
 
-        <label htmlFor="address">Address:</label>
-        <input name="address" onChange={handleChange} value={address} />
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <input name="address" onChange={handleChange} value={address} />
+          {!this.validFields.address && (
+            <p className="form-error">^ This field is required.</p>
+          )}
+        </div>
 
-        <label htmlFor="description">Description:</label>
-        <input name="description" onChange={handleChange} value={description} />
+        <div className="form-group">
+          <label htmlFor="description">Description:</label>
+          <input
+            name="description"
+            onChange={handleChange}
+            value={description}
+          />
+        </div>
 
-        <label htmlFor="imageUrl">Image URL:</label>
-        <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+        <div className="form-group">
+          <label htmlFor="imageUrl">Image URL:</label>
+          <input name="imageUrl" onChange={handleChange} value={imageUrl} />
+          {!this.validFields.imageUrl && (
+            <p className="form-error">^ If provided, must be a valid URL.</p>
+          )}
+        </div>
 
-        <button type="submit">Submit</button>
-        <Link to="/">Cancel</Link>
+        <div className="form-group">
+          <button
+            type="submit"
+            className="submit-btn"
+            onClick={() => this.props.updateCampus(this.state)}
+          >
+            Submit
+          </button>
+          <Link to="/">
+            <button type="button" className="cancel-btn">
+              Cancel
+            </button>
+          </Link>
+        </div>
       </form>
     );
   }
