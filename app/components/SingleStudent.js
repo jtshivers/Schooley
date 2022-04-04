@@ -53,7 +53,6 @@ export class SingleStudent extends React.Component {
     }
     if (typeof imageUrl === "string" && imageUrl.length > 0) {
       if (validUrl.isWebUri(imageUrl)) {
-        console.log("this imageUrl is valid");
         this.validFields.imageUrl = true;
       } else {
         this.validFields.imageUrl = false;
@@ -110,7 +109,7 @@ export class SingleStudent extends React.Component {
           <h3>GPA: {student.gpa}</h3>
           <img src={student.imageUrl} />
           {student.campus != null ? (
-            <Link to={`/campuses/${student.campus.id}`}>
+            <Link to={`/campuses/${student.campus.id}`} className="school-link">
               {student.campus.name}
             </Link>
           ) : (

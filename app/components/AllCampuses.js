@@ -36,10 +36,10 @@ export class AllCampuses extends React.Component {
   }
 
   filter(arr) {
-    console.log(arr);
-    console.log(this.state);
     if (this.state.filter === "empty") {
-      return arr.filter((campus) => campus.students.length === 0);
+      return arr.filter(
+        (campus) => campus.students && campus.students.length === 0
+      );
     } else {
       return arr;
     }
@@ -49,31 +49,41 @@ export class AllCampuses extends React.Component {
     const { handleSelect, sorter, filter } = this;
     return (
       <div className="campusList">
-        <label htmlFor="sort">Sort By: </label>
-        <select name="sort" id="campusSort" onChange={handleSelect}>
-          <option value="" disabled selected>
-            Select
-          </option>
-          <option value="numStudents">Size</option>
-        </select>
-        <label htmlFor="filter">Filter: </label>
-        <select name="filter" id="campusFilter" onChange={handleSelect}>
-          <option value="" disabled selected>
-            Select
-          </option>
-          <option value="all">All</option>
-          <option value="empty">Empty Schools</option>
-        </select>
+        <div className="options-campuses">
+          <h2>Options</h2>
+          <div className="form-group">
+            <label htmlFor="sort">Sort By: </label>
+            <select name="sort" id="campusSort" onChange={handleSelect}>
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option value="numStudents">Size</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="filter">Filter: </label>
+            <select name="filter" id="campusFilter" onChange={handleSelect}>
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option value="all">All</option>
+              <option value="empty">Empty Schools</option>
+            </select>
+          </div>
+        </div>
+        <CreateCampus />
         {filter(sorter(this.props.campuses)).map((campus) => (
           <div key={campus.id} className="campus">
             <Link to={`/campuses/${campus.id}`} className="campus-link">
               <h2>{campus.name}</h2>
-              <h3>
-                {campus.students.length} Student
-                {campus.students.length > 1 || campus.students.length === 0
-                  ? "s"
-                  : ""}
-              </h3>
+              {campus.students && (
+                <h3>
+                  {campus.students.length} Student
+                  {campus.students.length > 1 || campus.students.length === 0
+                    ? "s"
+                    : ""}
+                </h3>
+              )}
               <p>{campus.description}</p>
               <img src={campus.imageUrl} />
             </Link>
@@ -88,7 +98,6 @@ export class AllCampuses extends React.Component {
             </form>
           </div>
         ))}
-        <CreateCampus />
       </div>
     );
   }

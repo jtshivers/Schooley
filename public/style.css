@@ -9,7 +9,10 @@
 }
 
 body {
-  background: linear-gradient(#ffffff, #c0c0c0);
+  background-image: url("background.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   height: 100vh;
   padding: 0;
   margin: 0;
@@ -17,12 +20,75 @@ body {
 }
 
 nav {
+  position: fixed;
+  top: 0px;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  background-color: #333333;
+  justify-content: space-between;
+  width: 100%;
+  background-color: rgba(220, 215, 71, 0.95);
   color: #c0c0c0;
   display: flex;
   height: 80px;
+  padding-left: 160px;
+  padding-right: 160px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.nav-item-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  height: 50px;
   padding: 10px;
+  border: 10px;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+.nav-item-container:hover {
+  text-shadow: 0px 3px 10px rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.5s 0s ease;
+  -moz-transition: all 0.5s 0s ease;
+  -o-transition: all 0.5s 0s ease;
+  transition: all 0.5s 0s ease;
+}
+
+.nav-item-container:active {
+  color: transparent;
+  background: rgba(177, 173, 59, 0.95);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+  box-shadow: 0px 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+.nav-item {
+  align-content: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: transparent;
+  font-size: 1.5em;
+  background: #3e3e3e;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+.nav-item:hover {
+  text-shadow: 0px 3px 10px rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.5s 0s ease;
+  -moz-transition: all 0.5s 0s ease;
+  -o-transition: all 0.5s 0s ease;
+  transition: all 0.5s 0s ease;
+  font-size: 1.8em;
 }
 
 main {
@@ -37,12 +103,71 @@ img {
   max-height: 100px;
 }
 
+.welcome,
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 600px;
+  border: none;
+  border-radius: 10px;
+  padding: 50px;
+  margin: 50px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  background: rgba(55, 193, 208, 0.95);
+  margin-top: 135px;
+}
+
+.not-found img {
+  max-width: 600px;
+  max-height: 600px;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+.options-campuses {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  padding-top: 10px;
+  background: rgba(55, 193, 208, 0.95);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  margin: 40px;
+  height: 425px;
+  width: 350px;
+}
+
+.options-students {
+  height: 350px;
+  width: 350px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  padding-top: 10px;
+  background: rgba(55, 193, 208, 0.95);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  margin: 40px;
+}
+
 .campusList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 }
 
 .campus {
@@ -52,12 +177,17 @@ img {
   align-items: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(194, 27, 169, 0.5);
+  background: rgba(194, 27, 169, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
-  height: 350px;
+  height: 425px;
   width: 350px;
+}
+
+.campus:hover {
+  filter: saturate(1.25);
+  transition: all 0.5s 0s ease;
 }
 
 .campus-link {
@@ -69,6 +199,7 @@ img {
   align-items: center;
   padding: 10px;
   padding-top: 10px;
+  min-width: 0;
 }
 
 .campus-form {
@@ -78,12 +209,13 @@ img {
   justify-content: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
-  height: 350px;
+  height: 425px;
   width: 350px;
+  color: white;
 }
 
 .single-campus-container {
@@ -92,6 +224,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 }
 
 .single-campus {
@@ -101,7 +234,7 @@ img {
   align-items: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(194, 27, 169, 0.5);
+  background: rgba(194, 27, 169, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
@@ -121,24 +254,34 @@ img {
   justify-content: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
   height: 450px;
   width: 450px;
+  color: white;
 }
 
 .campus-student-container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
-  background: rgba(27, 194, 108, 0.5);
+  background: rgba(27, 194, 108, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  margin: 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 450px;
+  min-height: min-content;
+  padding-top: 35px;
+  padding-bottom: 5px;
+}
+
+.campus-student:hover {
+  filter: saturate(2);
+  transition: all 0.5s 0s ease;
 }
 
 .campus-student {
@@ -148,12 +291,13 @@ img {
   align-items: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(27, 194, 108, 0.5);
+  background: rgba(27, 194, 108, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
   height: 200px;
   width: 200px;
+  margin-top: 5px;
 }
 
 .studentList {
@@ -162,6 +306,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 }
 
 .student {
@@ -171,7 +316,7 @@ img {
   align-items: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(27, 194, 108, 0.5);
+  background: rgba(27, 194, 108, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
@@ -179,7 +324,14 @@ img {
   width: 350px;
 }
 
-.student-link {
+.student:hover {
+  filter: saturate(2);
+  transition: all 0.5s 0s ease;
+  z-index: 0;
+}
+
+.student-link,
+.school-link {
   text-decoration: none;
   color: black;
   display: flex;
@@ -187,14 +339,23 @@ img {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  padding-top: 10px;
 }
 
-.remove {
-  background-color: red;
-  margin-bottom: 10px;
-  height: 25px;
-  width: 25px;
+.school-link {
+  border-radius: 10px;
+  width: 200px;
+  height: 50px;
+  background-color: rgba(249, 0, 220, 0.85);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.school-link:hover {
+  filter: saturate(2);
+  transition: all 1s 0s ease;
+}
+
+.school-link:active {
+  background-color: rgba(177, 0, 157, 0.85);
 }
 
 .student-form {
@@ -204,12 +365,13 @@ img {
   justify-content: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
   height: 350px;
   width: 350px;
+  color: white;
 }
 
 .single-student-container {
@@ -218,6 +380,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 }
 
 .single-student {
@@ -227,7 +390,7 @@ img {
   align-items: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(27, 194, 108, 0.5);
+  background: rgba(27, 194, 108, 0.95);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
@@ -247,24 +410,25 @@ img {
   justify-content: center;
   padding: 40px;
   padding-top: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   margin: 40px;
   height: 450px;
   width: 450px;
+  color: white;
 }
 
 .form-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: space-between; */
   width: 100%;
   margin-bottom: 10px;
 }
 
-input {
+input,
+select {
   margin-left: 3px;
   border-radius: 4px;
   border: none;
@@ -279,10 +443,57 @@ button {
   border-radius: 4px;
 }
 
+.remove {
+  background-color: red;
+  margin-bottom: 10px;
+  height: 25px;
+  width: 25px;
+}
+
+.not-found-return {
+  background-color: rgb(1, 167, 1);
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  width: 100px;
+  height: 35px;
+  margin-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+  width: 100px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.submit-btn:hover,
+.cancel-btn:hover,
+.remove:hover,
+.not-found-return:hover {
+  cursor: pointer;
+  filter: saturate(2);
+  transition: all 0.5s 0s ease;
+}
+
 .submit-btn {
   background-color: green;
 }
 
+.submit-btn:active,
+.not-found-return:active {
+  background-color: rgb(0, 113, 0);
+}
+
 .cancel-btn {
   background-color: red;
+}
+
+.cancel-btn:active,
+.remove:active {
+  filter: saturate(1);
+  background-color: rgb(147, 0, 0);
 }

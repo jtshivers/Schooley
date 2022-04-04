@@ -5,8 +5,8 @@ import CreateStudent from "./CreateStudent";
 import { Link } from "react-router-dom";
 
 export class AllStudents extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       sort: "default",
       filter: "all",
@@ -33,10 +33,8 @@ export class AllStudents extends React.Component {
   }
 
   filter(arr) {
-    console.log(arr);
-    console.log(this.state);
     if (this.state.filter === "truant") {
-      return arr.filter((student) => student.campusId !== null);
+      return arr.filter((student) => student.campusId === null);
     } else {
       return arr;
     }
@@ -46,40 +44,36 @@ export class AllStudents extends React.Component {
     const { handleSelect, sorter, filter } = this;
     return (
       <div className="studentList">
-        <label htmlFor="sort">Sort By: </label>
-        <select name="sort" id="studentSort" onChange={handleSelect}>
-          <option value="" disabled selected>
-            Select
-          </option>
-          <option value="gpa">GPA</option>
-          <option value="lastName">Last Name</option>
-        </select>
-        <label htmlFor="filter">Filter: </label>
-        <select name="filter" id="studentFilter" onChange={handleSelect}>
-          <option value="" disabled selected>
-            Select
-          </option>
-          <option value="all">All</option>
-          <option value="truant">Truant Students</option>
-        </select>
+        <div className="options-students">
+          <h2>Options</h2>
+          <div className="form-group">
+            <label htmlFor="sort">Sort By: </label>
+            <select name="sort" id="studentSort" onChange={handleSelect}>
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option value="gpa">GPA</option>
+              <option value="lastName">Last Name</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="filter">Filter: </label>
+            <select name="filter" id="studentFilter" onChange={handleSelect}>
+              <option value="" disabled selected>
+                Select
+              </option>
+              <option value="all">All</option>
+              <option value="truant">Truant Students</option>
+            </select>
+          </div>
+        </div>
+        <CreateStudent />
         {filter(sorter(this.props.students)).map((student) => (
           <div key={student.id} className="student">
             <Link to={`/students/${student.id}`} className="student-link">
-              {/* <div className="form-group"> */}
               <h2>
                 {student.lastName}, {student.firstName}
               </h2>
-              {/* <form onSubmit={(ev) => ev.preventDefault()}>
-                <button
-                  type="button"
-                  className="remove"
-                  onClick={() => this.props.deleteStudent(student.id)}
-                >
-                  X
-                </button>
-              </form> */}
-              {/* </div> */}
-
               <p>GPA: {student.gpa}</p>
               <img src={student.imageUrl} />
             </Link>
@@ -94,7 +88,6 @@ export class AllStudents extends React.Component {
             </form>
           </div>
         ))}
-        <CreateStudent />
       </div>
     );
   }

@@ -51,7 +51,6 @@ class CreateStudent extends Component {
     }
     if (typeof imageUrl === "string" && imageUrl.length > 0) {
       if (validUrl.isWebUri(imageUrl)) {
-        console.log("this imageUrl is valid");
         this.validFields.imageUrl = true;
       } else {
         this.validFields.imageUrl = false;
@@ -64,6 +63,13 @@ class CreateStudent extends Component {
     } else {
       this.validFields.gpa = false;
     }
+    this.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      imageUrl: "",
+      gpa: 0.0,
+    });
     return Object.values(this.validFields).reduce((a, b) => a && b, true);
   }
 
@@ -90,42 +96,42 @@ class CreateStudent extends Component {
         <div className="form-group">
           <label htmlFor="firstName">First Name:</label>
           <input name="firstName" onChange={handleChange} value={firstName} />
-          {!this.validFields.firstName && (
-            <p className="form-error">^ This field is required.</p>
-          )}
         </div>
+        {!this.validFields.firstName && (
+          <p className="form-error">^ This field is required.</p>
+        )}
 
         <div className="form-group">
           <label htmlFor="lastName">Last Name:</label>
           <input name="lastName" onChange={handleChange} value={lastName} />
-          {!this.validFields.lastName && (
-            <p className="form-error">^ This field is required.</p>
-          )}
         </div>
+        {!this.validFields.lastName && (
+          <p className="form-error">^ This field is required.</p>
+        )}
 
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input name="email" onChange={handleChange} value={email} />
-          {!this.validFields.email && (
-            <p className="form-error">^ Must be a valid email address.</p>
-          )}
         </div>
+        {!this.validFields.email && (
+          <p className="form-error">^ Must be a valid email address.</p>
+        )}
 
         <div className="form-group">
           <label htmlFor="gpa">GPA:</label>
           <input name="gpa" onChange={handleChange} value={gpa} />
-          {!this.validFields.gpa && (
-            <p className="form-error">^ Must be a number between 0 and 4.</p>
-          )}
         </div>
+        {!this.validFields.gpa && (
+          <p className="form-error">^ Must be a number between 0 and 4.</p>
+        )}
 
         <div className="form-group">
           <label htmlFor="imageUrl">Image URL:</label>
           <input name="imageUrl" onChange={handleChange} value={imageUrl} />
-          {!this.validFields.imageUrl && (
-            <p className="form-error">^ If provided, must be a valid URL.</p>
-          )}
         </div>
+        {!this.validFields.imageUrl && (
+          <p className="form-error">^ If provided, must be a valid URL.</p>
+        )}
 
         <div className="form-group">
           <button type="submit" className="submit-btn">

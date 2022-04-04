@@ -42,7 +42,6 @@ export class SingleCampus extends React.Component {
     }
     if (typeof imageUrl === "string" && imageUrl.length > 0) {
       if (validUrl.isWebUri(imageUrl)) {
-        console.log("this imageUrl is valid");
         this.validFields.imageUrl = true;
       } else {
         this.validFields.imageUrl = false;
@@ -83,10 +82,6 @@ export class SingleCampus extends React.Component {
 
     const { campus } = this.props;
     let students = campus.students;
-    // console.log("students are ", students);
-    // console.log("campus is", campus);
-    // console.log("campus students are", campus.students);
-    console.log("campus is", campus);
     if (!Object.keys(campus).length) {
       return <NotFound type="campus" />;
     }
@@ -100,7 +95,6 @@ export class SingleCampus extends React.Component {
         </div>
 
         <div className="campus-student-container">
-          {/* {students != null && <h2>Students</h2>} */}
           {students != null
             ? students.map((student) => (
                 <div key={student.id} className="campus-student">

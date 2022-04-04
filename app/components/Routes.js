@@ -1,22 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Campus from "./AllCampuses";
 import SingleCampus from "./SingleCampus";
 import Student from "./AllStudents";
 import SingleStudent from "./SingleStudent";
 import NotFound from "./NotFound";
 import Homepage from "./Homepage";
+import NavBar from "./NavBar";
 
 const Routes = () => {
   return (
     <Router>
       <div>
-        <nav>
-          Welcome!
-          <Link to="/">Home</Link>
-          <Link to="/campuses">Campuses</Link>
-          <Link to="/students">Students</Link>
-        </nav>
+        <NavBar />
         <main>
           <Switch>
             <Route exact path="/" component={Homepage} />

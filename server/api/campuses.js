@@ -31,7 +31,7 @@ router.get("/:id", async (req, res, next) => {
       ],
     });
     if (campus === null) {
-      res.status(404).send("404 Not Found"); ////////////////EDIT LATER TO UNIVERSAL 404 PAGE WITH ERROR//////
+      res.status(404).send("404 Not Found");
     } else {
       res.json(campus);
     }

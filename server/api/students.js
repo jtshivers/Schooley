@@ -25,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
       ],
     });
     if (student === null) {
-      res.status(404).send("404 Not Found"); ////////////////EDIT LATER TO UNIVERSAL 404 PAGE WITH ERROR//////
+      res.status(404).send("404 Not Found");
     } else {
       res.json(student);
     }
@@ -48,13 +48,11 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    console.log("req body is", req.body);
     const student = await Student.findByPk(req.params.id);
     let newStudent = req.body;
     if (newStudent.imageUrl === "") {
       delete newStudent.imageUrl;
     }
-    console.log("newStudent after delete is ", newStudent);
     res.send(await student.update(newStudent));
   } catch (error) {
     next(error);
