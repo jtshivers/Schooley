@@ -31,7 +31,9 @@ export class AllCampuses extends React.Component {
     if (this.state.sort === "default") {
       return arr;
     } else {
-      return arr.sort((a, b) => b.students.length - a.students.length);
+      return arr.sort((a, b) =>
+        a.students ? b.students.length - a.students.length : arr
+      );
     }
   }
 
