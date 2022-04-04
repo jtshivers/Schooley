@@ -123,18 +123,18 @@ export class SingleCampus extends React.Component {
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input name="name" onChange={handleChange} value={name} />
-            {!this.validFields.name && (
-              <p className="form-error">^ This field is required.</p>
-            )}
           </div>
+          {!this.validFields.name && (
+            <p className="form-error">^ This field is required.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="address">Address:</label>
             <input name="address" onChange={handleChange} value={address} />
-            {!this.validFields.address && (
-              <p className="form-error">^ This field is required.</p>
-            )}
           </div>
+          {!this.validFields.address && (
+            <p className="form-error">^ This field is required.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="description">Description:</label>
@@ -148,10 +148,10 @@ export class SingleCampus extends React.Component {
           <div className="form-group">
             <label htmlFor="imageUrl">Image URL:</label>
             <input name="imageUrl" onChange={handleChange} value={imageUrl} />
-            {!this.validFields.imageUrl && (
-              <p className="form-error">^ If provided, must be a valid URL.</p>
-            )}
           </div>
+          {!this.validFields.imageUrl && (
+            <p className="form-error">^ If provided, must be a valid URL.</p>
+          )}
 
           <div className="form-group">
             <button

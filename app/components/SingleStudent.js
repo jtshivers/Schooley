@@ -123,42 +123,42 @@ export class SingleStudent extends React.Component {
           <div className="form-group">
             <label htmlFor="firstName">First Name:</label>
             <input name="firstName" onChange={handleChange} value={firstName} />
-            {!this.validFields.firstName && (
-              <p className="form-error">^ This field is required.</p>
-            )}
           </div>
+          {!this.validFields.firstName && (
+            <p className="form-error">^ This field is required.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="lastName">Last Name:</label>
             <input name="lastName" onChange={handleChange} value={lastName} />
-            {!this.validFields.lastName && (
-              <p className="form-error">^ This field is required.</p>
-            )}
           </div>
+          {!this.validFields.lastName && (
+            <p className="form-error">^ This field is required.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input name="email" onChange={handleChange} value={email} />
-            {!this.validFields.email && (
-              <p className="form-error">^ Must be a valid email address.</p>
-            )}
           </div>
+          {!this.validFields.email && (
+            <p className="form-error">^ Must be a valid email address.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="gpa">GPA:</label>
             <input name="gpa" onChange={handleChange} value={gpa} />
-            {!this.validFields.gpa && (
-              <p className="form-error">^ Must be a number between 0 and 4.</p>
-            )}
           </div>
+          {!this.validFields.gpa && (
+            <p className="form-error">^ Must be a number between 0 and 4.</p>
+          )}
 
           <div className="form-group">
             <label htmlFor="imageUrl">Image URL:</label>
             <input name="imageUrl" onChange={handleChange} value={imageUrl} />
-            {!this.validFields.imageUrl && (
-              <p className="form-error">^ If provided, must be a valid URL.</p>
-            )}
           </div>
+          {!this.validFields.imageUrl && (
+            <p className="form-error">^ If provided, must be a valid URL.</p>
+          )}
 
           <div className="form-group">
             <button
