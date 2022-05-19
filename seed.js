@@ -3,12 +3,6 @@ const { db, Campus, Student } = require("./server/db");
 
 const students = [
   {
-    firstName: "Randy",
-    lastName: "BoBandy",
-    email: "poopscoop@gmail.com",
-    gpa: 3.0,
-  },
-  {
     firstName: "Eloisa",
     lastName: "Barbara",
     email: "ebarbara0@gmpg.org",

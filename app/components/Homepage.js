@@ -13,10 +13,6 @@ export default function Homepage() {
         To keep things clean and prevent vandalism, the database will be
         reseeded daily.
       </h3>
-      <h3>
-        Check out the repo{" "}
-        <a href="https://github.com/jtshivers/Schooley">here!</a>
-      </h3>
     </div>
   );
 }
