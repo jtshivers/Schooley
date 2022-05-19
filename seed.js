@@ -1133,6 +1133,17 @@ const seed = async () => {
   }
 };
 
+var CronJob = require("cron").CronJob;
+var job = new CronJob(
+  "00 00 01 * * *",
+  function () {
+    seed();
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+
 module.exports = seed;
 // If this module is being required from another module, then we just export the
 // function, to be used as necessary. But it will run right away if the module
