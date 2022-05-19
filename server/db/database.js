@@ -17,6 +17,7 @@ console.log(chalk.yellow(`Opening database connection to ${dbName}`));
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${dbName}`,
   {
+    rejectUnauthorized: false,
     logging: false,
   }
 );
